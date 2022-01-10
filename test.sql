@@ -1,1 +1,0 @@
-'CREATE TABLE RECEIPT(id   integer primary key,closed   integer default 0,open_date   varchar(50),);'

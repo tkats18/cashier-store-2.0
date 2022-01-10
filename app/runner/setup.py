@@ -58,7 +58,7 @@ def setup() -> FastAPI:
     )
     product_repository = conf.product_repository(
         product_entity,
-        ProductFileInitializer("./../../data_initial" "/products.json"),
+        ProductFileInitializer("./../../data_initial/products.json"),
         True,
     )
     receipt_repository = conf.receipt_repository(
