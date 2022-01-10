@@ -18,6 +18,9 @@ from app.infra.memory.storage_interface.receipt_component_protocol import (
 from app.infra.memory.storage_interface.receipt_protocol import IReceiptDb
 
 
+# აქ ინტერაქტორებს ვიფიქრე როცალკე ინტერფეისებს გავუკეთებდი
+# მარა ვერ მოვასწარი და თან ზედმეტი მომეჩვენა იმიტო რო მაინც
+# აქ იქმნება და არაფერს აფუჭებს :დდდ
 @dataclass
 class StoreService:
     receipt_interactor: ReceiptInteractor

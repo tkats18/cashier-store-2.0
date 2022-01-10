@@ -117,4 +117,3 @@ class DatabaseConfiguration:
 # tests
 
 # formatting (is 6 warning)
-# interactorebis metodebia dasamali??
