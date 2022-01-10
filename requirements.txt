@@ -3,3 +3,6 @@ isort
 mypy
 flake8
 pytest
+fastapi
+uvicorn
+starlette~=0.16.0

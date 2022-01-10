@@ -1,0 +1,9 @@
+{
+  "products": [
+    {
+      "name": "shawarma",
+      "price": "2.8",
+      "units": 1
+    }
+  ]
+}
