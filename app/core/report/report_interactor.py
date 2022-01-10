@@ -1,5 +1,6 @@
 from typing import Dict
 
+from app.core.model.store_exception import StoreException
 from app.core.receipt.receipt_interactor import ReceiptInteractor
 from app.core.report.report_model import ReportResponse, ReportType
 from app.core.report.report_strategy import IReportStrategy
@@ -22,7 +23,6 @@ class ReportInteractor:
             data.append(self.receipt_interactor.get_receipt(i.receipt_id))
 
         if not self.report_engines.__contains__(report):
-            print("error")
-        #     TODO theow error
+            raise StoreException("report engine does not exists")
 
         return ReportResponse(self.report_engines[report].report(data))

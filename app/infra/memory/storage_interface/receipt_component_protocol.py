@@ -1,9 +1,7 @@
-from typing import List
-
-from app.infra.memory.storage_interface.initializing_storage import InitializingStorage
+from typing import List, Protocol
 
 
-class IReceiptComponentDb(InitializingStorage):  # type: ignore
+class IReceiptComponentDb(Protocol):
     def add_receipt_component(self, receipt_id: int, product_ids: List[int]) -> None:
         pass
 

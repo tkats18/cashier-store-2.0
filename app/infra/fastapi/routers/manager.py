@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends
 
 from app.core.facade import IManagerService
-from app.core.report.report_model import ReportResponse, ReportType
+from app.core.model.store_response import StoreResponse
+from app.core.report.report_model import ReportType
 from app.infra.fastapi.dependables import get_manager_service
 
 manager_api = APIRouter()
@@ -11,7 +12,7 @@ manager_api = APIRouter()
 def generate_report_x(
     day: str,
     service: IManagerService = Depends(get_manager_service),
-) -> ReportResponse:
+) -> StoreResponse:
     return service.generate_report(ReportType.X_REPORT, day)
 
 

@@ -1,4 +1,7 @@
-from app.core.facade import StoreService
+from fastapi import FastAPI
+
+from app.core.facade import StoreAdapter
+from app.core.store.store import StoreService
 from app.infra.fastapi.routers import cashier, customer, manager
 from app.infra.memory.database_management.database_config import (
     DbConfigurationParams,
@@ -12,7 +15,6 @@ from app.infra.memory.entity_management.entity_init_startegy import (
     EmptyFileInitializer,
     ProductFileInitializer,
 )
-from fastapi import FastAPI
 
 
 def setup() -> FastAPI:
@@ -69,6 +71,6 @@ def setup() -> FastAPI:
     store_service = StoreService.create(
         receipt_repository, product_repository, receipt_component_repository
     )
-    app.state.core = store_service
+    app.state.core = StoreAdapter(store_service)
 
     return app

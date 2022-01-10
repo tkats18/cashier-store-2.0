@@ -22,19 +22,19 @@ from app.infra.memory.in_memory.in_memory_receipt_c_repository import (
 )
 from app.infra.memory.in_memory.in_memory_receipt_repository import ReceiptInMemory
 from app.infra.memory.sql_lite.sql_lite_product_repository import (
-    IProductDb,
     ProductSqlLite,
 )
 from app.infra.memory.sql_lite.sql_lite_receipt_c_repository import (
     ReceiptComponentSqlLite,
 )
 from app.infra.memory.sql_lite.sql_lite_receipt_repository import (
-    IReceiptDb,
     ReceiptSqlLite,
 )
+from app.infra.memory.storage_interface.product_protocol import IProductDb
 from app.infra.memory.storage_interface.receipt_component_protocol import (
     IReceiptComponentDb,
 )
+from app.infra.memory.storage_interface.receipt_protocol import IReceiptDb
 
 
 class IDatabaseFactory(Protocol):
@@ -82,6 +82,7 @@ class DatabaseConfiguration:
     def product_repository(
         self, entity: Entity, initializer: IEntityInitializer, drop_if_exists: bool
     ) -> IProductDb:
+
         if self.params.db_type == DbType.SQLLITE:
             repo = ProductSqlLite(entity, self.db_access, drop_if_exists)
         else:
@@ -113,9 +114,7 @@ class DatabaseConfiguration:
         return repo
 
 
-# errros
 # tests
 # formatting
 
-# interactorebi initializers xedaven
-# interactorebis metodebia dasamali
+# interactorebis metodebia dasamali??

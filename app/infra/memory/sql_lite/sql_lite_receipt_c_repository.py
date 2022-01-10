@@ -3,25 +3,22 @@ from typing import Any, List
 
 from app.infra.memory.database_management.database_factory import IDatabaseAccessObject
 from app.infra.memory.entity_management.entity_builder import Entity
-from app.infra.memory.storage_interface.receipt_component_protocol import (
-    IReceiptComponentDb,
-)
 
 
-class ReceiptComponentSqlLite(IReceiptComponentDb):  # type: ignore
+class ReceiptComponentSqlLite:
     def __init__(
         self, entity: Entity, db_access: IDatabaseAccessObject, drop_if_exists: bool
     ):
-        self.entity = entity
+        self._entity = entity
         self._connection: Connection = db_access.get_access_object()
 
         if drop_if_exists:
             cursor = self._connection.cursor()
-            cursor.execute("DROP TABLE IF EXISTS " + self.entity.name)
+            cursor.execute("DROP TABLE IF EXISTS " + self._entity.name)
             self._connection.commit()
 
         cursor = self._connection.cursor()
-        cursor.execute(self.entity.to_sql_representation())
+        cursor.execute(self._entity.to_sql_representation())
         self._connection.commit()
         cursor.close()
 
@@ -33,18 +30,18 @@ class ReceiptComponentSqlLite(IReceiptComponentDb):  # type: ignore
             cursor = self._connection.cursor()
             cursor.execute(
                 "INSERT INTO "
-                + self.entity.name
+                + self._entity.name
                 + " (receipt_id, product_id) values (?,?)",
                 [receipt_id, i],
             )
             cursor.close()
 
-    # TODO tu ar arsebobs error
     def get_receipt_component(self, receipt_id: int) -> List[int]:
         result = []
         cursor = self._connection.cursor()
         cursor.execute(
-            "SELECT * FROM " + self.entity.name + " WHERE receipt_id = ? ", [receipt_id]
+            "SELECT * FROM " + self._entity.name + " WHERE receipt_id = ? ",
+            [receipt_id],
         )
         data = cursor.fetchall()
         for i in data:

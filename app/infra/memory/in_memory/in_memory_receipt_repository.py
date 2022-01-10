@@ -6,10 +6,9 @@ from app.core.receipt.receipt_representation import (
 )
 from app.infra.memory.database_management.database_factory import IDatabaseAccessObject
 from app.infra.memory.entity_management.entity_builder import Entity
-from app.infra.memory.sql_lite.sql_lite_receipt_repository import IReceiptDb
 
 
-class ReceiptInMemory(IReceiptDb):  # type: ignore
+class ReceiptInMemory:
     def __init__(
         self, entity: Entity, db_access: IDatabaseAccessObject, drop_if_exists: bool
     ):

@@ -2,6 +2,7 @@ import datetime
 from sqlite3 import Connection
 from typing import Any, List
 
+from app.core.model.store_exception import StoreException
 from app.core.receipt.receipt_representation import (
     ReceiptDataPartialListRepresentation,
     ReceiptRepresentation,
@@ -9,10 +10,9 @@ from app.core.receipt.receipt_representation import (
 )
 from app.infra.memory.database_management.database_factory import IDatabaseAccessObject
 from app.infra.memory.entity_management.entity_builder import Entity
-from app.infra.memory.storage_interface.receipt_protocol import IReceiptDb
 
 
-class ReceiptSqlLite(IReceiptDb):  # type: ignore
+class ReceiptSqlLite:
     def __init__(
         self, entity: Entity, db_access: IDatabaseAccessObject, drop_if_exists: bool
     ):
@@ -41,8 +41,9 @@ class ReceiptSqlLite(IReceiptDb):  # type: ignore
 
         return int(receipt_id)
 
-    # TODO tu ar arsebobs error
     def close_receipt(self, receipt_id: int) -> None:
+        self.get_receipt(receipt_id)
+
         cursor = self._connection.cursor()
         cursor.execute(
             "update " + self.entity.name + " set closed = True where id = ?",
@@ -53,7 +54,6 @@ class ReceiptSqlLite(IReceiptDb):  # type: ignore
     def initialize_with_items(self, items: List[Any]) -> None:
         pass
 
-    # TODO tu ar arsebobs error
     def get_receipt(self, receipt_id: int) -> ReceiptRepresentation:
         cursor = self._connection.cursor()
         cursor.execute(
@@ -61,7 +61,9 @@ class ReceiptSqlLite(IReceiptDb):  # type: ignore
         )
         result = cursor.fetchone()
         if result is None:
-            raise RuntimeError()
+            raise StoreException(
+                "Receipt with id " + str(receipt_id) + " does not exist"
+            )
 
         return ReceiptRepresentation(
             int(

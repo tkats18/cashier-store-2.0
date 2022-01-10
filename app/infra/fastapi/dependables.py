@@ -1,5 +1,6 @@
-from app.core.facade import ICashierService, ICustomerService, IManagerService
 from starlette.requests import Request
+
+from app.core.facade import IManagerService, ICustomerService, ICashierService
 
 
 def get_manager_service(request: Request) -> IManagerService:

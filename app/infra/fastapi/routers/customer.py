@@ -1,9 +1,9 @@
-from app.core.facade import ICustomerService
-from app.core.product.product_representation import ProductListResponse
-from app.core.receipt.receipt_representation import ReceiptFullRepresentation
-from app.infra.fastapi.dependables import get_customer_service
 from fastapi import APIRouter
 from fastapi.params import Depends
+
+from app.core.facade import ICustomerService
+from app.core.model.store_response import StoreResponse
+from app.infra.fastapi.dependables import get_customer_service
 
 customer_api: APIRouter = APIRouter()
 
@@ -21,12 +21,12 @@ customer_api: APIRouter = APIRouter()
 def pay_receipt(
     receipt_id: int,
     service: ICustomerService = Depends(get_customer_service),
-) -> ReceiptFullRepresentation:
+) -> StoreResponse:
     return service.get_receipt(receipt_id)
 
 
 @customer_api.get("/view/products")  # type: ignore
 def get_products(
     service: ICustomerService = Depends(get_customer_service),
-) -> ProductListResponse:
+) -> StoreResponse:
     return service.get_products()

@@ -1,11 +1,12 @@
+from typing import Protocol
+
 from app.core.receipt.receipt_representation import (
     ReceiptDataPartialListRepresentation,
     ReceiptRepresentation,
 )
-from app.infra.memory.storage_interface.initializing_storage import InitializingStorage
 
 
-class IReceiptDb(InitializingStorage):  # type: ignore
+class IReceiptDb(Protocol):
     def open_receipt(self) -> int:
         pass
 
