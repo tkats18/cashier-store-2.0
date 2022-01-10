@@ -4,6 +4,16 @@
       "name": "shawarma",
       "price": "2.8",
       "units": 1
+    },
+    {
+      "name": "pizza",
+      "price": "5.3",
+      "units": 1
+    },
+    {
+      "name": "coke",
+      "price": "1",
+      "units": 6
     }
   ]
 }
